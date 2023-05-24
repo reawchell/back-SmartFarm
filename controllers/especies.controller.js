@@ -11,6 +11,7 @@ async function obtenerxId(id){
     return alumno
 }
 
+
 async function obtenerxDNI(dni){
     const alumno = await Alumno.findOne({dni: dni})
     return alumno
