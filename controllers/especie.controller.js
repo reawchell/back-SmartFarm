@@ -10,9 +10,9 @@ async function crear(body){
     const nuevaEspecie = new Especie({
         // id: body.id,
         nombre: body.nombre,
-        especie: body.especie,
         sexo: body.sexo,
-        raza: body.raza
+        raza: body.raza,
+        imagen: body.imagen
         
     })
     await nuevaEspecie.save()
