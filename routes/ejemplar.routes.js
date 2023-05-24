@@ -3,15 +3,13 @@ const router = express.Router();
 const ejemplarController = require('../controllers/ejemplar.controller')
 // const especieController = require('../controllers/especie.controller')
 
-const {
-  obtenerTdos,
-  crear,
-  apagar,
-  cambiar,
-  modificar,
-} = require("../controllers/ejemplar.controller");
-
-
+// const {
+//   obtenerTdos,
+//   crear,
+//   apagar,
+//   cambiar,
+//   modificar,
+// } = require("../controllers/ejemplar.controller");
 
 router.get("/", async (req, res) => {
   try {
@@ -35,7 +33,7 @@ router.post("/", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    await apagar(req.params.id)
+    await ejemplarController.apagar(req.params.id)
     res.json({ msg: "Eliminado!" })
   } catch (error) {
     res.status(500)
@@ -45,7 +43,7 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    const resultado = cambiar(req.params.id, req.body)
+    const resultado = ejemplarController.cambiar(req.params.id, req.body)
     res.json(resultado);
   } catch (error) {
     res.status(500);
@@ -55,7 +53,7 @@ router.put("/:id", async (req, res) => {
 
 router.patch("/:id", async (req, res) => {
   try {
-    await modificar(req.params.id, req.body)
+    await ejemplarController.modificar(req.params.id, req.body)
     res.json({ msg: "AINDA É CEDO, MÁS É DOMINGO" });
   } catch (error) {
     res.status(500);

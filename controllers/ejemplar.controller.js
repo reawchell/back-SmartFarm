@@ -6,9 +6,8 @@ async function obtenerTdos(){
 
 async function crear(body){
     const nuevo = new Ejemplar({
-        
-        edad: body.edad,
         peso: body.peso,
+        edad: body.edad,
         salud: body.salud,
         especie: body.especie,
         

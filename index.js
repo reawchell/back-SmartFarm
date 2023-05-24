@@ -11,7 +11,9 @@ const direccionRoutes = require('./routes/direccion.routes')
 
 const router = express.Router()
 
-const cadenaConexio = 'mongodb+srv://reaw:9KKlU09gJC8ZUl1O@cluster0.ilywd9z.mongodb.net/smartFarm'
+//const cadenaConexio = 'mongodb+srv://reaw:9KKlU09gJC8ZUl1O@cluster0.ilywd9z.mongodb.net/smartFarm'
+const cadenaConexio = 'mongodb+srv://eavellanet12:4PfUGvS6ypKrAJKF@universidad.wn4t1vb.mongodb.net/smartFarm'
+
 mongoose.connect(cadenaConexio)
 const database = mongoose.connection
 
