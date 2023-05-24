@@ -1,5 +1,5 @@
  function check1(req,res,next){
-    console.log('este CHECK1 näo faz nada')
+    console.log('este CHECK1 no hizo nada')
     next() 
 
    
@@ -8,18 +8,18 @@
 function check2(req,res,next){
     console.log('esta pasando por el check 2')
     res.status(403)
-    res.json(' Você nao pode entrar aqui')
+    res.json('No puedes entrar')
 }
 
-function esDniValido(req,res,next){
-    if(req.body.dni .length > 9){
-        res.status(400)
-        res.json({msg:'El dni o es correcto' })
-    }
-    else{
-        next()
-    }
-}
+// function esCifValido(req,res,next){
+//     if(req.body.cif .length > 9){
+//         res.status(400)
+//         res.json({msg:'El cif no es correcto' })
+//     }
+//     else{
+//         next()
+//     }
+// }
 
 function esModificacionAceptada(req,res,next){
     if(req.body.esAdmin){
@@ -35,7 +35,7 @@ function esModificacionAceptada(req,res,next){
     module.exports = {
         check1,
         check2,
-        esDniValido,
+        // esCifValido,
         esModificacionAceptada
     }
  

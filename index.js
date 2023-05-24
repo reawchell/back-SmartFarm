@@ -4,14 +4,14 @@ const server = express()
 const cors = require('cors')
 
 server.use(cors())
-const alumnoRoutes = require('./routes/alumno.routes')
-const asignaturaRoutes = require('./routes/asignatura.routes')
-const profesorRoutes = require('./routes/profesor.routes')
+const usuarioRoutes = require('./routes/usuario.routes')
+const especieRoutes = require('./routes/especie.routes')
+const ejemplarRoutes = require('./routes/ejemplar.routes')
 const direccionRoutes = require('./routes/direccion.routes')
 
 const router = express.Router()
 
-const cadenaConexio = 'mongodb+srv://reaw:9KKlU09gJC8ZUl1O@cluster0.ilywd9z.mongodb.net/universidad'
+const cadenaConexio = 'mongodb+srv://reaw:9KKlU09gJC8ZUl1O@cluster0.ilywd9z.mongodb.net/smartFarm'
 mongoose.connect(cadenaConexio)
 const database = mongoose.connection
 
@@ -26,9 +26,9 @@ server.use(express.json())
 
 server.use('/', router)
 
-server.use('/alumnos',alumnoRoutes)
-server.use('/profesores',profesorRoutes)    
-server.use('/asignatura',asignaturaRoutes)
+server.use('/usuarios',usuarioRoutes)
+server.use('/ejemplar',ejemplarRoutes)    
+server.use('/especies',especieRoutes)
 server.use('/direcciones',direccionRoutes)
 
 

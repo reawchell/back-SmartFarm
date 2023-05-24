@@ -1,6 +1,6 @@
 const passport = require('passport')
 const localStrategy = require('passport-local').Strategy
-const Profesor = require('../models/profesor.model')
+const Usuario = require('../models/usuario.model')
 
 const JWTStrategy = require('passport-jwt').Strategy
 const ExtractJWT = require('passport-jwt').StractJWT
@@ -11,12 +11,12 @@ passport.use('signup', new localStrategy({
 
 }, async (emailExterno, passwordExterno, done)=>{
     try{
-        const nuevo = await Profesor.create({
+        const nuevo = await Usuario.create({
             email: emailExterno,
             password: passwordExterno,
-            nombre: '',
-            apellidos:'',
+            responsable: '',
         })
+
         return done (null, nuevo)
     }catch(error){
         done(error,null)

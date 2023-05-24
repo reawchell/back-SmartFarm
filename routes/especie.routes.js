@@ -1,16 +1,16 @@
 
 const express = require('express')
 const router = express.Router()
-const {obtenerTdos, crear, apagar} = require('../controllers/asignatura.controller')
+const {obtenerTdos, crear, apagar} = require('../controllers/especie.controller')
 //const { crear } = require('../controllers/alumno.controller')
 
 router.get('/', async(req,res)=>{
     try{
-        const asignaturas = await obtenerTdos()
-        res.json(asignaturas)
+        const especies = await obtenerTdos()
+        res.json(especies)
     }catch(error){
         res.status(500)
-        res.json({msg: 'Há ocurrido un fallo'})
+        res.json({msg: 'Ha ocurrido un fallo 1'})
     }
 
 })
@@ -18,11 +18,11 @@ router.get('/', async(req,res)=>{
 router.post('/', async (req,res)=>{
     try{
        //console.log(req.body)
-        const nuevaAsignatura = await crear(req.body)
-        res.json(nuevaAsignatura)
+        const nuevaEspecie = await crear(req.body)
+        res.json(nuevaEspecie)
     }catch (error){
         res.status(500)
-        res.json({msg: 'Há ocurrido un fallo'}) 
+        res.json({msg: 'Ha ocurrido un fallo 1'}) 
     }
 })
 
@@ -33,7 +33,7 @@ router.delete('/:id', async (req,res)=>{
         res.json({msg: 'result'})
     } catch (error) {
         res.status(500)
-        res.json({msg: 'Há ocurrido un fallo'}) 
+        res.json({msg: 'Ha ocurrido un fallo'}) 
     }
 })
 

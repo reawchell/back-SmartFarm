@@ -15,16 +15,16 @@ router.get('/', async(req,res)=>{
     }
 })
 
-router.post('/', async(req,res)=>{
-    try{
-        const nueva = await crear(req.body)
-        res.json(nueva)
+// router.post('/', async(req,res)=>{
+//     try{
+//         const nueva = await crear(req.body)
+//         res.json(nueva)
 
-    }catch(error){
-        res.status(500)
-        res.json({msg:'um minuto para o fim do mundo'})
-    }
-})
+//     }catch(error){
+//         res.status(500)
+//         res.json({msg:'um minuto para o fim do mundo'})
+//     }
+// })
 
 router.patch("/:id", async(req,res)=>{
     try {
