@@ -5,7 +5,7 @@ async function obtenerTdos(){
     const alumnos = await Alumno.find().populate('direccion')// sustituye el id por la info de direccion
     return alumnos
 }
-
+// tester
 async function obtenerxId(id){
     const alumno = await Alumno.findOne({_id: id})
     return alumno
