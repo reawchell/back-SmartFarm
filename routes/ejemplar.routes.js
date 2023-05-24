@@ -1,18 +1,21 @@
 const express = require("express");
 const router = express.Router();
+const ejemplarController = require('../controllers/ejemplar.controller')
+// const especieController = require('../controllers/especie.controller')
+
 const {
   obtenerTdos,
   crear,
   apagar,
   cambiar,
   modificar,
-} = require("../controllers/profesor.controller");
+} = require("../controllers/ejemplar.controller");
 
 
 
 router.get("/", async (req, res) => {
   try {
-    const resultado = await obtenerTdos()
+    const resultado = await ejemplarController.obtenerTdos()
     res.json(resultado)
   } catch (error) {
     res.status(500)
@@ -22,11 +25,11 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const nuevoProfesor = crear(req.body)
-    res.json(nuevoProfesor);
+    const nuevoEjemplar = await ejemplarController.crear(req.body)
+    res.json(nuevoEjemplar);
   } catch (error) {
     res.status(500);
-    res.json({ msg: "Há ocurrido un fallo" });
+    res.json({ msg: "Haaaaa ocurrido un fallo" });
   }
 });
 
