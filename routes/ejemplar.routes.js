@@ -11,22 +11,64 @@ router.get("/", async (req, res) => {
     res.json(resultado)
   } catch (error) {
     res.status(500)
-    res.json({ msg: "Há ocurrido un fallo" })
+    res.json({ msg: "Ha ocurrido un error en el get" })
   }
 })
-
-
-router.post("/", async (req, res) => { 
+router.get("/:id", async (req, res) => {
   try {
-      const nuevoEspecie = await especieController.crear(req.body.especie)
-      const nuevoEjemplar = { ...req.body, especie: nuevoEspecie._id };
-      const ejemplarCreado = await ejemplarController.crear(nuevoEjemplar);
-      res.json(ejemplarCreado)
+    const resultado = await ejemplarController.obtenerxId(req.params.id)
+    res.json(resultado)
   } catch (error) {
-      res.status(500)
-      res.json({ msg: 'ha ocurrido un fallo 2' })
+    res.status(500)
+    res.json({ msg: "Ha ocurrido un error en el get" })
   }
 })
+
+
+router.post("/", async (req, res) => {
+  try {
+    const nuevoEspecie = await especieController.crear(req.body.especie)
+    const nuevoEjemplar = { ...req.body, especie: nuevoEspecie._id };
+    const ejemplarCreado = await ejemplarController.crear(nuevoEjemplar);
+    res.json(ejemplarCreado)
+  } catch (error) {
+    res.status(500)
+    res.json({ msg: 'Ha ocurrido un error en el post' })
+  }
+})
+
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const ejemplarActualizado = await ejemplarController.editar(id, body);
+    res.json(ejemplarActualizado);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Ha ocurrido un error en la edición" });
+  }
+});
+// router.put("/:id", async (req, res) => {
+//   try {
+//     const nuevoEspecie = await especieController.cambiar(req.body.especie)
+//     const nuevoEjemplar = { ...req.body, especie: nuevoEspecie._id };
+//     const ejemplarCreado = await ejemplarController.cambiar(nuevoEjemplar);
+//     res.json(ejemplarCreado);
+//   } catch (error) {
+//     res.status(500);
+//     res.json({ msg: "No funciona el put" });
+//   }
+// });
+
+router.patch("/:id", async (req, res) => {
+  try {
+    await ejemplarController.modificar(req.params.id, req.body)
+    res.json({ msg: "AINDA É CEDO, MÁS É DOMINGO" });
+  } catch (error) {
+    res.status(500);
+    res.json({ msg: "Ha ocurrido un error en el patch" });
+  }
+});
 
 
 router.delete("/:id", async (req, res) => {
@@ -35,28 +77,9 @@ router.delete("/:id", async (req, res) => {
     res.json({ msg: "Eliminado!" })
   } catch (error) {
     res.status(500)
-    res.json({ msg: "Há ocurrido un fallo" })
+    res.json({ msg: "Ha ocurrido un error en el delete" })
   }
 })
 
-router.put("/:id", async (req, res) => {
-  try {
-    const resultado = ejemplarController.cambiar(req.params.id, req.body)
-    res.json(resultado);
-  } catch (error) {
-    res.status(500);
-    res.json({ msg: "Há ocurrido un fallo" });
-  }
-});
-
-router.patch("/:id", async (req, res) => {
-  try {
-    await ejemplarController.modificar(req.params.id, req.body)
-    res.json({ msg: "AINDA É CEDO, MÁS É DOMINGO" });
-  } catch (error) {
-    res.status(500);
-    res.json({ msg: "Há ocurrido un fallo" });
-  }
-});
 
 module.exports = router;
