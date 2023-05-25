@@ -1,20 +1,21 @@
 const Ejemplar = require('../models/ejemplar.model')//importa el modelo de mongoose
 
 async function obtenerTdos(){
-    return await Ejemplar.find().populate('especie')
+    const ejemplares = await Ejemplar.find().populate('especie')
+    return ejemplares
 }
 
 async function crear(body){
-    const nuevo = new Ejemplar({
+    const nuevoEjemplar = new Ejemplar({
         peso: body.peso,
         edad: body.edad,
         salud: body.salud,
         especie: body.especie,
-        
     })
-    await nuevo.save()
-    return nuevo
+    await nuevoEjemplar.save()
+    return nuevoEjemplar
 }
+
 
 async function apagar(id){
     const result = await Ejemplar.findByIdAndDelete(id)

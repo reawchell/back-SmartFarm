@@ -15,16 +15,16 @@ router.get('/', async (req, res) => {
 
 })
 
-router.post('/', async (req, res) => {
-    try {
-        //console.log(req.body)
-        const nuevaEspecie = await crear(req.body)
-        res.json(nuevaEspecie)
-    } catch (error) {
-        res.status(500)
-        res.json({ msg: 'Ha ocurrido un fallo 2' })
-    }
-})
+// router.post('/', async (req, res) => {
+//     try {
+//         //console.log(req.body)
+//         const nuevaEspecie = await crear(req.body)
+//         res.json(nuevaEspecie)
+//     } catch (error) {
+//         res.status(500)
+//         res.json({ msg: 'Ha ocurrido un fallo 2' })
+//     }
+// })
 
 router.delete('/:id', async (req, res) => {
     try {

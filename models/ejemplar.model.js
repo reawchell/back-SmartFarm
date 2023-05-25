@@ -5,25 +5,25 @@ const ejemplarSchema = new mongoose.Schema({
         required: true,
         type: Number,
     },
-   
-    edad:{
-        requiered: true,
+
+    edad: {
+        required: true,
         type: Number,
     },
-    
+
     salud: {
-        requiered: true,
-        type: String
-    
+        required: true,
+        type: String,
+
     },
 
     especie: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Especie",
         required: true,
-      },
+    },
 
-})
+});
 
 
 module.exports = mongoose.model('Ejemplar', ejemplarSchema)

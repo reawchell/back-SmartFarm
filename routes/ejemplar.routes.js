@@ -1,15 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const ejemplarController = require('../controllers/ejemplar.controller')
-// const especieController = require('../controllers/especie.controller')
+const especieController = require('../controllers/especie.controller')
 
-// const {
-//   obtenerTdos,
-//   crear,
-//   apagar,
-//   cambiar,
-//   modificar,
-// } = require("../controllers/ejemplar.controller");
+
 
 router.get("/", async (req, res) => {
   try {
@@ -21,15 +15,19 @@ router.get("/", async (req, res) => {
   }
 })
 
-router.post("/", async (req, res) => {
+
+router.post("/", async (req, res) => { 
   try {
-    const nuevoEjemplar = await ejemplarController.crear(req.body)
-    res.json(nuevoEjemplar);
+      const nuevoEspecie = await especieController.crear(req.body.especie)
+      const nuevoEjemplar = { ...req.body, especie: nuevoEspecie._id };
+      const ejemplarCreado = await ejemplarController.crear(nuevoEjemplar);
+      res.json(ejemplarCreado)
   } catch (error) {
-    res.status(500);
-    res.json({ msg: "Haaaaa ocurrido un fallo" });
+      res.status(500)
+      res.json({ msg: 'ha ocurrido un fallo 2' })
   }
-});
+})
+
 
 router.delete("/:id", async (req, res) => {
   try {
