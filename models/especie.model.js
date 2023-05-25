@@ -14,6 +14,7 @@ const especieSchema = new mongoose.Schema({
         type: String,
     },
     imagen: {
+        required: false,
         type: String
     }
   

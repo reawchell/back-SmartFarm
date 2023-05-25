@@ -31,9 +31,8 @@ router.post("/", async (req, res) => { //esCifValido,
         const nuevaDireccion = await direccionController.crear(req.body.direccion)
         const nuevoUsuario = { ...req.body, direccion: nuevaDireccion._id };
         const usuarioCreado = await usuarioController.crear(nuevoUsuario);
-        res.json(nuevoUsuario)
+        res.json(usuarioCreado)
     } catch (error) {
-        console.log(error)
         res.status(500)
         res.json({ msg: 'ha ocurrido un fallo 2' })
     }
