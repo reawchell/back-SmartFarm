@@ -5,6 +5,10 @@ const usuarioSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
+  email: {
+    required: true,
+    type: String,
+  },
   responsable: {
     required: true,
     type: String,
