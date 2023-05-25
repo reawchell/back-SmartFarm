@@ -31,6 +31,7 @@ async function obtenerxEmpresa(empresa) {
 async function crear(body) {
     const nuevoUsuario = new Usuario({
         empresa: body.empresa,
+        email: body.email,
         responsable: body.responsable,
         cif: body.cif,
         telefono: body.telefono,
