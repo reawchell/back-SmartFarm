@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:cif", check1, async (req, res) => {
     try {
-        const Usuario = await usuarioController.obtenerxCIF(req.params.dni)
+        const Usuario = await usuarioController.obtenerxCIF(req.params.cif)
         res.json(Usuario)
     } catch (error) {
         res.status(500)
@@ -34,7 +34,7 @@ router.post("/", async (req, res) => { //esCifValido,
         res.json(usuarioCreado)
     } catch (error) {
         res.status(500)
-        res.json({ msg: 'ha ocurrido un fallo 2' })
+        res.json({ msg: 'Ha ocurrido un fallo 2' })
     }
 })
 router.patch("/:id", esModificacionAceptada, async (req, res) => { //esCifValido,
@@ -46,15 +46,15 @@ router.patch("/:id", esModificacionAceptada, async (req, res) => { //esCifValido
         res.json({ msg: 'Ha ocurrido un fallo' })
     }
 
-    // router.delete("/:id", async (req, res) => {
-    //     try {
-    //       await apaga(req.params.id)
-    //       res.json({ msg: "Eliminado!" })
-    //     } catch (error) {
-    //       res.status(500)
-    //       res.json({ msg: "Ha ocurrido un fallo" })
-    //     }
-    //   })
+    router.delete("/:id", async (req, res) => {
+        try {
+            await apaga(req.params.id)
+            res.json({ msg: "Eliminado!" })
+        } catch (error) {
+            res.status(500)
+            res.json({ msg: "Ha ocurrido un fallo" })
+        }
+    })
 
 })
 

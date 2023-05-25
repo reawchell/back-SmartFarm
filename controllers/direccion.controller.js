@@ -20,10 +20,20 @@ async function modificar(id, body){
     return result
 }
 
+async function eliminar(id){
+    try{
+        const resultado = await Direccion.findByIdAndDelete(id);
+        return resultado;
+    }catch(error){
+        throw error;
+    }
+}
+
 
 
 module.exports = {
     obtenerTdos,
     crear,
-    modificar
+    modificar,
+    eliminar
 }
