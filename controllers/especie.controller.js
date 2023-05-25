@@ -4,7 +4,6 @@ async function obtenerTdos(){
     return await Especie.find()
 }
 
-
 async function crear(body){
     const nuevaEspecie = new Especie({
         nombre: body.nombre,
@@ -24,4 +23,5 @@ async function modificar(id,body){
 module.exports = {
     obtenerTdos,
     crear,
+    modificar
 }

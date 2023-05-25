@@ -3,7 +3,7 @@ const router = express.Router()
 //const {obtenerTdos, obtenerxDNI, crear} = require('../controllers/Usuario.controller')
 const usuarioController = require('../controllers/usuario.controller')
 const direccionController = require('../controllers/direccion.controller')
-const { check1, check2, esModificacionAceptada } = require('../middlewares/usuario.middlewares') //esCifValido
+const { check1, check2, esModificacionAceptada, esCif } = require('../middlewares/usuario.middlewares') //esCifValido
 
 
 router.get("/", async (req, res) => {
@@ -15,16 +15,17 @@ router.get("/", async (req, res) => {
         res.json({ msg: 'No tienes permisos para acceder' })
     }
 })
-
-router.get("/:cif", check1, async (req, res) => {
+router.get("/:id", async (req, res) => { //, check1
     try {
-        const Usuario = await usuarioController.obtenerxCIF(req.params.cif)
-        res.json(Usuario)
+        const usuario = await usuarioController.obtenerxId(req.params.id)
+        res.json(usuario)
     } catch (error) {
         res.status(500)
-        res.json({ msg: 'Ha ocurrido un fallo 1' })
+        res.json({ msg: 'Ha ocurrido un fallo en el id' })
     }
 })
+//Query para filtros
+
 
 router.post("/", async (req, res) => { //esCifValido,
     try {
@@ -37,25 +38,25 @@ router.post("/", async (req, res) => { //esCifValido,
         res.json({ msg: 'Ha ocurrido un fallo 2' })
     }
 })
-router.patch("/:id", esModificacionAceptada, async (req, res) => { //esCifValido,
+router.patch("/:id", async (req, res) => { //esCifValido,esModificacionAceptada,
     try {
         await usuarioController.modificar(req.params.id, req.body)
         res.json({ msg: 'La información se ha actualizado correctamente' })
     } catch (error) {
+        console.log(error)
         res.status(500)
         res.json({ msg: 'Ha ocurrido un fallo' })
     }
+})
 
-    router.delete("/:id", async (req, res) => {
-        try {
-            await apaga(req.params.id)
-            res.json({ msg: "Eliminado!" })
-        } catch (error) {
-            res.status(500)
-            res.json({ msg: "Ha ocurrido un fallo" })
-        }
-    })
-
+router.delete("/:id", async (req, res) => {
+    try {
+        await usuarioController.borrar(req.params.id)
+        res.json({ msg: "Eliminado!" })
+    } catch (error) {
+        res.status(500)
+        res.json({ msg: "Ha ocurrido un fallo" })
+    }
 })
 
 module.exports = router

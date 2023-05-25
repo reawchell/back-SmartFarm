@@ -6,7 +6,7 @@ async function obtenerTdos() {
 }
 async function obtenerxId(id) {
     try {
-        const ejemplar = await Ejemplar.findOne({ _id: id });
+        const ejemplar = await Ejemplar.findOne({ _id: id }).populate('especie');
         if (!ejemplar) {
             throw new Error("No se encontró ningún ejemplar con el ID proporcionado");
         }
@@ -18,6 +18,7 @@ async function obtenerxId(id) {
 
 async function crear(body) {
     const nuevoEjemplar = new Ejemplar({
+        identificador: body.identificador,
         peso: body.peso,
         edad: body.edad,
         salud: body.salud,
@@ -28,43 +29,23 @@ async function crear(body) {
 }
 async function editar(id, body) {
     try {
-        const ejemplar = await Ejemplar.findById(id);
-        console.log(ejemplar)
-        if (!ejemplar) {
-            throw new Error("No se encontró el ejemplar con el ID proporcionado");
-        }
-        ejemplar.peso = body.peso;
-        ejemplar.edad = body.edad;
-        ejemplar.salud = body.salud;
-        ejemplar.especie = body.especie;
-        await ejemplar.save();
-        return ejemplar;
+        const ejemplar = await Ejemplar.findByIdAndUpdate(id, body);
+        return ejemplar
     } catch (error) {
         throw new Error("Error al editar el ejemplar: " + error.message);
     }
 }
 
-async function apagar(id) {
+async function borrar(id) {
     const result = await Ejemplar.findByIdAndDelete(id)
     return result
 }
 
-async function cambiar(id, body) {
-    const result = await Ejemplar.replaceOne({ _id: id }, body)
-    return result
-}
-
-async function modificar(id, body) {
-    const result = await Ejemplar.findOneAndUpdate(id, body)
-    return result
-}
 
 module.exports = {
     obtenerTdos,
-    crear,
-    apagar,
-    cambiar,
-    modificar,
     obtenerxId,
-    editar
+    crear,
+    editar,
+    borrar
 }
