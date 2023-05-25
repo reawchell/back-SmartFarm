@@ -24,7 +24,6 @@ router.get("/:id", async (req, res) => {
   }
 })
 
-
 router.post("/", async (req, res) => {
   try {
     const nuevoEspecie = await especieController.crear(req.body.especie)
@@ -70,10 +69,9 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-
 router.delete("/:id", async (req, res) => {
   try {
-    await ejemplarController.apagar(req.params.id)
+    await ejemplarController.borrar(req.params.id)
     res.json({ msg: "Eliminado!" })
   } catch (error) {
     res.status(500)

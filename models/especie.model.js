@@ -19,5 +19,5 @@ const especieSchema = new mongoose.Schema({
     }
   
 })
-
+especieSchema.index({ nombre: 1, sexo: 1, raza: 1 }, { unique: true });
 module.exports = mongoose.model('Especie', especieSchema)
