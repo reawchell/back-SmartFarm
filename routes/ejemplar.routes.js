@@ -7,8 +7,15 @@ const especieController = require('../controllers/especie.controller')
 
 router.get("/", async (req, res) => {
   try {
-    const resultado = await ejemplarController.obtenerTdos()
-    res.json(resultado)
+    if(req.query.especie){
+      const resultado = await ejemplarController.obtenerPorEspecie(req.query.especie);
+      res.json(resultado)
+    }
+    else{
+      const resultado = await ejemplarController.obtenerTdos()
+      res.json(resultado)
+    }
+    
   } catch (error) {
     res.status(500)
     res.json({ msg: "Ha ocurrido un error en el get" })
@@ -26,11 +33,12 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const nuevoEspecie = await especieController.crear(req.body.especie)
-    const nuevoEjemplar = { ...req.body, especie: nuevoEspecie._id };
-    const ejemplarCreado = await ejemplarController.crear(nuevoEjemplar);
+    //const nuevoEspecie = await especieController.crear(req.body.especie)
+    //const nuevoEjemplar = { ...req.body, especie: nuevoEspecie._id };
+    const ejemplarCreado = await ejemplarController.crear(req.body);
     res.json(ejemplarCreado)
   } catch (error) {
+    console.log(error)
     res.status(500)
     res.json({ msg: 'Ha ocurrido un error en el post' })
   }

@@ -4,6 +4,12 @@ async function obtenerTdos() {
     const ejemplares = await Ejemplar.find().populate('especie')
     return ejemplares
 }
+
+async function obtenerPorEspecie(especieQuery) {
+    const ejemplares = await Ejemplar.find({especie:  especieQuery}).populate('especie')
+    return ejemplares
+}
+
 async function obtenerxId(id) {
     try {
         const ejemplar = await Ejemplar.findOne({ _id: id }).populate('especie');
@@ -17,13 +23,7 @@ async function obtenerxId(id) {
 }
 
 async function crear(body) {
-    const nuevoEjemplar = new Ejemplar({
-        identificador: body.identificador,
-        peso: body.peso,
-        edad: body.edad,
-        salud: body.salud,
-        especie: body.especie,
-    })
+    const nuevoEjemplar = new Ejemplar(body)
     await nuevoEjemplar.save()
     return nuevoEjemplar
 }
@@ -47,5 +47,6 @@ module.exports = {
     obtenerxId,
     crear,
     editar,
-    borrar
+    borrar,
+    obtenerPorEspecie
 }
