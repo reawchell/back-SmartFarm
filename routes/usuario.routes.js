@@ -38,6 +38,40 @@ router.post("/", async (req, res) => { //esCifValido,
         res.json({ msg: 'Ha ocurrido un fallo 2' })
     }
 })
+router.post("/login", async (req, res) => { //esCifValido,
+    try {
+        const userInfo = await usuarioController.login(req,res);
+        res.json({
+            status: 200,
+      message: HTTPSTATUSCODE[200],
+      user: userInfo.user,
+      token: userInfo.token,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 400,
+      message: HTTPSTATUSCODE[400],
+      data: null,
+    });
+  }
+});
+router.get("/logout", async (req, res) => {
+    try {
+      await usuarioController.logout(req, res);
+      res.json({
+        status: 200,
+        message: HTTPSTATUSCODE[200],
+        token: null,
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: 500,
+        message: HTTPSTATUSCODE[500],
+        data: null,
+      });
+    }
+  });
+
 router.patch("/:id", async (req, res) => { //esCifValido,esModificacionAceptada,
     try {
         await usuarioController.modificar(req.params.id, req.body)
