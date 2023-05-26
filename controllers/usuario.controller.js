@@ -1,5 +1,8 @@
 //const Usuario = require('../models/Usuario.model')//importa el modelo de mongoose
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 const Usuario = require('../models/usuario.model')
+
 
 async function obtenerTodos() {
     const usuarios = await Usuario.find().populate('direccion')// sustituye el id por la info de direccion
@@ -44,7 +47,9 @@ async function crear(body) {
 const login = async (req, res, next) => {
     try {
         const userInfo = await Usuario.findOne({ email: req.body.email });
+        console.log(userInfo.password,req.body.password)
         if (bcrypt.compareSync(req.body.password, userInfo.password)) {
+            console.log(userInfo)
             userInfo.password = null;
             const token = jwt.sign(
                 {
@@ -56,18 +61,17 @@ const login = async (req, res, next) => {
             );
             return res.json({
                 status: 200,
-                message: HTTPSTATUSCODE[200],
                 user: userInfo,
                 token: token,
             });
         } else {
             return res.json({
                 status: 400,
-                message: HTTPSTATUSCODE[400],
                 data: null,
             });
         }
     } catch (error) {
+        console.log(error)
         return next(error);
     }
 };
@@ -76,7 +80,6 @@ const logout = (req, res, next) => {
     try {
         return res.json({
             status: 200,
-            message: HTTPSTATUSCODE[200],
             token: null,
         });
     } catch (error) {

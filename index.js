@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const server = express()
 const cors = require('cors')
 
-server.use(cors())
 const usuarioRoutes = require('./routes/usuario.routes')
 const especieRoutes = require('./routes/especie.routes')
 const ejemplarRoutes = require('./routes/ejemplar.routes')
@@ -25,6 +24,20 @@ database.on('connected',()=>{
 
 })
 server.use(express.json())
+
+server.use((req, res, next) => {
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,PATCH,POST,DELETE');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+  });
+
+server.use(cors({
+    origin: "*",
+    credentials: true
+}))
+
+server.set("secretKey", "olaquetl1!")
 
 server.use('/', router)
 
