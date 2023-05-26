@@ -47,7 +47,7 @@ async function crear(body) {
 const login = async (req, res, next) => {
     try {
         const userInfo = await Usuario.findOne({ email: req.body.email });
-        console.log(userInfo.password,req.body.password)
+        console.log(userInfo.password, req.body.password)
         if (bcrypt.compareSync(req.body.password, userInfo.password)) {
             console.log(userInfo)
             userInfo.password = null;
@@ -59,16 +59,16 @@ const login = async (req, res, next) => {
                 req.app.get("secretKey"),
                 { expiresIn: "1h" }
             );
-            return res.json({
+            return {
                 status: 200,
                 user: userInfo,
                 token: token,
-            });
+            };
         } else {
-            return res.json({
+            return {
                 status: 400,
                 data: null,
-            });
+            };
         }
     } catch (error) {
         console.log(error)
