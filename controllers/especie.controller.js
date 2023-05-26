@@ -17,11 +17,17 @@ async function crear(body){
 }
 
 async function modificar(id,body){
-    await ejemplar.findByIdAndUpdate(id,body)
+    await Especie.findByIdAndUpdate(id,body)
 }
+async function borrar(id) {
+    const result = await Especie.findByIdAndDelete(id)
+    return result
+}
+
 
 module.exports = {
     obtenerTdos,
     crear,
-    modificar
+    modificar,
+    borrar
 }
