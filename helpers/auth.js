@@ -1,25 +1,43 @@
-const passport = require('passport')
-const localStrategy = require('passport-local').Strategy
-const Usuario = require('../models/usuario.model')
+//Requerimos la dependencia de jsonwebtoken;
+const jwt = require("jsonwebtoken");
+// const HTTPSTATUSCODE = require("../utils/httpStatusCode");
 
-const JWTStrategy = require('passport-jwt').Strategy
-const ExtractJWT = require('passport-jwt').StractJWT
+const isAuth = (req, res, next) => {
+  
+  const authorization = req.headers.authorization;
+  
+  if (!authorization) {
+    return res.json({
+      status: 401,
+      data: null,
+    });
+  }
+  
+  const splits = authorization.split(" ");
+  if (splits.length != 2 || splits[0] != "Bearer") {
+    return res.json({
+      status: 400,
+      data: null,
+    });
+  }
+  
+  const jwtString = splits[1];
 
-passport.use('signup', new localStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
+  try {
+      
+      var token = jwt.verify(jwtString, req.app.get("secretKey"))
+  } catch (error) {
+      return next(error);
+  }
+  
+  const authority = {
+      id: token.id,
+      email: token.email
+  }
+ 
+  req.authority = authority;
+  
+  next()
+};
 
-}, async (emailExterno, passwordExterno, done)=>{
-    try{
-        const nuevo = await Usuario.create({
-            email: emailExterno,
-            password: passwordExterno,
-            responsable: '',
-        })
-
-        return done (null, nuevo)
-    }catch(error){
-        done(error,null)
-    }
-}
-))
+module.exports = {isAuth}
