@@ -4,6 +4,7 @@ const router = express.Router()
 const usuarioController = require('../controllers/usuario.controller')
 const direccionController = require('../controllers/direccion.controller')
 const { check1, check2, esModificacionAceptada, esCif } = require('../middlewares/usuario.middlewares') //esCifValido
+const {estaLoggeado} = require("../middlewares/usuario.middlewares")
 
 
 router.get("/", async (req, res) => {
@@ -68,7 +69,7 @@ router.get("/logout", async (req, res) => {
     }
 });
 
-router.patch("/:id", async (req, res) => { //esCifValido,esModificacionAceptada,
+router.patch("/:id",estaLoggeado, async (req, res) => { //esCifValido,esModificacionAceptada,
     try {
         await usuarioController.modificar(req.params.id, req.body)
         res.json({ msg: 'La información se ha actualizado correctamente' })
@@ -79,7 +80,7 @@ router.patch("/:id", async (req, res) => { //esCifValido,esModificacionAceptada,
     }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id",estaLoggeado, async (req, res) => {
     try {
         await usuarioController.borrar(req.params.id)
         res.json({ msg: "Eliminado!" })

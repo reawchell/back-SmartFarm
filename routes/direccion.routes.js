@@ -1,10 +1,11 @@
 //const { modificar } = require('../controllers/alumno.controller')
 const { crear, obtenerTdos, modificar } = require('../controllers/direccion.controller')
+const {estaLoggeado} = require("../middlewares/usuario.middlewares")
 
 const express = require('express')
 const router = express.Router()
 
-router.get('/', async (req, res) => {
+router.get('/',estaLoggeado, async (req, res) => {
     try {
         const direcciones = await obtenerTdos()
         res.json(direcciones)
@@ -16,7 +17,7 @@ router.get('/', async (req, res) => {
 })
 
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id",estaLoggeado, async (req, res) => {
     try {
         const result = modificar(req.params.id, req.body)
         res.json(result)
@@ -27,7 +28,7 @@ router.patch("/:id", async (req, res) => {
     }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id",estaLoggeado,  async (req, res) => {
     try {
         await eliminar(req.params.id)
         res.json({ msg: 'Dirección eliminada correctamente' })

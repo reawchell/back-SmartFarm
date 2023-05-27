@@ -3,8 +3,9 @@ const express = require('express')
 const router = express.Router()
 const { obtenerTdos, crear, borrar } = require('../controllers/especie.controller')
 //const { crear } = require('../controllers/alumno.controller')
+const {estaLoggeado} = require("../middlewares/usuario.middlewares")
 
-router.get('/', async (req, res) => {
+router.get('/',estaLoggeado, async (req, res) => {
     try {
         const especies = await obtenerTdos()
         res.json(especies)
@@ -12,10 +13,9 @@ router.get('/', async (req, res) => {
         res.status(500)
         res.json({ msg: 'Ha ocurrido un fallo 1' })
     }
-
 })
 
-router.post('/', async (req, res) => {
+router.post('/',estaLoggeado, async (req, res) => {
      try {
          //console.log(req.body)
          const nuevaEspecie = await crear(req.body)
@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
      }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',estaLoggeado, async (req, res) => {
     try {
         //await Asignatura.deleteOne({_id: req.params.id})
         await borrar(req.params.id)

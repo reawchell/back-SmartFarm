@@ -1,3 +1,26 @@
+const { getUserFromToken } = require("../utils/SecretToken");
+
+async function estaLoggeado(req, res, next) {
+    next();
+    // const user = await getUserFromToken(req.query.token);
+    // console.log(user)
+    // if (user && user.rol === "empleado") {
+    //   next();
+    // } else {
+    //   return res.status(403).json({msg: 'acceso denegado'});
+    // }
+  }
+  
+  async function isAdmin(req, res, next) {
+    const user = await getUserFromToken(req.query.token);
+    console.log(user);
+    if (user && user.rol === "admin") {
+      next();
+    } else {
+      return res.status(403).json({msg: 'acceso denegado'});
+    }
+  }
+
 function esCif(req, res, next) {
     const idOrCif = req.params.id;
     // Verificar si es un CIF
@@ -33,13 +56,10 @@ function check2(req, res, next) {
 //     }
 // }
 
-
-function estaLoggeado(req,res,next){
-    next()
-
+// function estaLoggeado(req,res,next){
+//     next()
     /*
     const token = req.query.token
-
     if(token){
         // validar que l token esta okay, que el usauario existe ...
         
@@ -58,9 +78,8 @@ function estaLoggeado(req,res,next){
         res.status(403).json({msg: "no hay token"})
     }
     console.log('este es el token',token)
+    }
 */
-
-}
 
 function esModificacionAceptada(req, res, next) {
     if (req.body.esAdmin) {
@@ -72,11 +91,12 @@ function esModificacionAceptada(req, res, next) {
     }
 }
 
-
 module.exports = {
     check1,
     check2,
     // esCifValido,
     esModificacionAceptada,
-    estaLoggeado
+    estaLoggeado,
+    isAdmin,
+    esCif
 }

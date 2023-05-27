@@ -4,9 +4,7 @@ const Usuario = require("../models/usuario.model")
 // const HTTPSTATUSCODE = require("../utils/httpStatusCode");
 
 const isAuth = async (req, res, next) => {
-
     const authorization = req.headers.authorization;
-
     if (!authorization) {
         return res.json({
             status: 401,

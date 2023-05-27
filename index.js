@@ -1,7 +1,9 @@
+require('dotenv').config();
 const express = require('express')
 const mongoose = require('mongoose')
 const server = express()
 const cors = require('cors')
+const { MONGO_URL, PORT } = process.env;
 
 const usuarioRoutes = require('./routes/usuario.routes')
 const especieRoutes = require('./routes/especie.routes')
@@ -11,7 +13,7 @@ const direccionRoutes = require('./routes/direccion.routes')
 const router = express.Router()
 
 //const cadenaConexio = 'mongodb+srv://reaw:9KKlU09gJC8ZUl1O@cluster0.ilywd9z.mongodb.net/smartFarm'
-const cadenaConexio = 'mongodb+srv://eavellanet12:4PfUGvS6ypKrAJKF@universidad.wn4t1vb.mongodb.net/smartFarm'
+const cadenaConexio = MONGO_URL
 
 mongoose.connect(cadenaConexio)
 const database = mongoose.connection
@@ -47,6 +49,6 @@ server.use('/especies',especieRoutes)
 server.use('/direcciones',direccionRoutes)
 
 
-server.listen(4000, ()=>{
+server.listen(PORT, ()=>{
     console.log(`servidor online en puerto 4000`)
 })
