@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const ejemplarController = require('../controllers/ejemplar.controller')
 const especieController = require('../controllers/especie.controller')
+const {estaLoggeado} = require("../middlewares/usuario.middlewares")
 
 
-
-router.get("/", async (req, res) => {
+router.get("/", estaLoggeado,async (req, res) => {
   try {
     if(req.query.especie){
       const resultado = await ejemplarController.obtenerPorEspecie(req.query.especie);
@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
     res.json({ msg: "Ha ocurrido un error en el get" })
   }
 })
-router.get("/:id", async (req, res) => {
+router.get("/:id",estaLoggeado, async (req, res) => {
   try {
     const resultado = await ejemplarController.obtenerxId(req.params.id)
     res.json(resultado)
@@ -31,7 +31,7 @@ router.get("/:id", async (req, res) => {
   }
 })
 
-router.post("/", async (req, res) => {
+router.post("/",estaLoggeado, async (req, res) => {
   try {
     //const nuevoEspecie = await especieController.crear(req.body.especie)
     //const nuevoEjemplar = { ...req.body, especie: nuevoEspecie._id };
@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/:id",estaLoggeado, async (req, res) => {
   try {
     const { id } = req.params;
     const body = req.body;
@@ -67,7 +67,7 @@ router.put("/:id", async (req, res) => {
 //   }
 // });
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id",estaLoggeado, async (req, res) => {
   try {
     await ejemplarController.modificar(req.params.id, req.body)
     res.json({ msg: "AINDA É CEDO, MÁS É DOMINGO" });
@@ -77,7 +77,7 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id",estaLoggeado, async (req, res) => {
   try {
     await ejemplarController.borrar(req.params.id)
     res.json({ msg: "Eliminado!" })
