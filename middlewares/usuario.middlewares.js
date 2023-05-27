@@ -34,6 +34,34 @@ function check2(req, res, next) {
 // }
 
 
+function estaLoggeado(req,res,next){
+    next()
+
+    /*
+    const token = req.query.token
+
+    if(token){
+        // validar que l token esta okay, que el usauario existe ...
+        
+         descifrar el token para sacar el _id del usuario
+         buscar el usuario
+
+         si hay usuario
+            next()
+         si no hay usuario
+             res.status(403).json({msg: "token corrupto"})
+        
+        
+        next()
+    }
+    else{
+        res.status(403).json({msg: "no hay token"})
+    }
+    console.log('este es el token',token)
+*/
+
+}
+
 function esModificacionAceptada(req, res, next) {
     if (req.body.esAdmin) {
         res.status(403)
@@ -49,5 +77,6 @@ module.exports = {
     check1,
     check2,
     // esCifValido,
-    esModificacionAceptada
+    esModificacionAceptada,
+    estaLoggeado
 }
